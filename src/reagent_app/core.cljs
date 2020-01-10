@@ -1,18 +1,38 @@
 (ns reagent-app.core
     (:require
-      [reagent.core :as r]))
+      [reagent.core :as r]
+      ))
 
 (def table-data (r/atom {:one nil, :two nil, :three nil, :four nil, :five nil, :six nil, :seven nil, :eight nil, :nine nil}))
+(def winning-positions (r/atom #{
+                                 #{:one :two :three}
+                                 #{:four :five :six}
+                                 #{:seven :eight :nine}
+                                 #{:one :four :seven}
+                                 #{:two :five :eight}
+                                 #{:three :six :nine}
+                                 #{:one :five :nine}
+                                 #{:three :five :seven}
+                                 }))
 (def players (r/atom ["O", "X"]))
 (def current-player (r/atom 0))
 
 (defn change-turn []
   (swap! current-player (fn [n] (- (- n 1)))))
 
+(defn has-won [player]
+  (do
+    (if-not (empty? (filter (fn [n] (clojure.set/subset? n (set (filter (comp #{player} @table-data) (keys @table-data)))))
+          @winning-positions))
+          (js/alert (str "Hurray \"" player "\" Won the game"))
+      )))
+
 (defn mark [event]
   (do
     (swap! table-data assoc-in [(keyword event.target.id)] (@players @current-player))
-    (change-turn)))
+    (has-won (@players @current-player))
+    (change-turn)
+    ))
 
 (defn tic-tac-toe-table [table-data]
   [:div [:table
