@@ -16,6 +16,7 @@
                                  }))
 (def players (r/atom ["O", "X"]))
 (def current-player (r/atom 0))
+(def button-style {:width 100 :height 100 :font-size 50})
 
 (defn change-turn []
   (swap! current-player (fn [n] (- (- n 1)))))
@@ -37,18 +38,18 @@
 (defn tic-tac-toe-table [table-data]
   [:div [:table
          [:tr
-          [:td [:button {:id :one :style {:width 100 :height 100 :font-size 50} :on-click mark} (:one @table-data)]]
-          [:td [:button {:id :two :style {:width 100 :height 100 :font-size 50} :on-click mark} (:two @table-data)]]
-          [:td [:button {:id :three :style {:width 100 :height 100 :font-size 50} :on-click mark} (:three @table-data)]]
+          [:td [:button {:id :one :style button-style :on-click mark} (:one @table-data)]]
+          [:td [:button {:id :two :style button-style :on-click mark} (:two @table-data)]]
+          [:td [:button {:id :three :style button-style :on-click mark} (:three @table-data)]]
           ]
          [:tr
-          [:td [:button {:id :four :style {:width 100 :height 100 :font-size 50} :on-click mark} (:four @table-data)]]
-          [:td [:button {:id :five :style {:width 100 :height 100 :font-size 50} :on-click mark} (:five @table-data)]]
-          [:td [:button {:id :six :style {:width 100 :height 100 :font-size 50} :on-click mark} (:six @table-data)]]]
+          [:td [:button {:id :four :style button-style :on-click mark} (:four @table-data)]]
+          [:td [:button {:id :five :style button-style :on-click mark} (:five @table-data)]]
+          [:td [:button {:id :six :style button-style :on-click mark} (:six @table-data)]]]
          [:tr
-          [:td [:button {:id :seven :style {:width 100 :height 100 :font-size 50} :on-click mark} (:seven @table-data)]]
-          [:td [:button {:id :eight :style {:width 100 :height 100 :font-size 50} :on-click mark} (:eight @table-data)]]
-          [:td [:button {:id :nine :style {:width 100 :height 100 :font-size 50} :on-click mark} (:nine @table-data)]]
+          [:td [:button {:id :seven :style button-style :on-click mark} (:seven @table-data)]]
+          [:td [:button {:id :eight :style button-style :on-click mark} (:eight @table-data)]]
+          [:td [:button {:id :nine :style button-style :on-click mark} (:nine @table-data)]]
           ]]])
 
 ;; -------------------------
