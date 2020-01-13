@@ -25,7 +25,7 @@
 
 (defn has-won [player]
   (do
-    (if-not (empty? (filter (fn [winning-combo] (clojure.set/subset? winning-combo (played-positions player))) @winning-positions))
+    (if-not (empty? (filter (partial clojure.set/superset? (played-positions player)) @winning-positions))
           (js/alert (str "Hurray \"" player "\" Won the game"))
       )))
 
