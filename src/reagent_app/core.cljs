@@ -21,10 +21,11 @@
 (defn change-turn []
   (swap! current-player (fn [n] (- (- n 1)))))
 
+(defn played-positions [player] (set (filter (comp #{player} @table-data) (keys @table-data))))
+
 (defn has-won [player]
   (do
-    (if-not (empty? (filter (fn [n] (clojure.set/subset? n (set (filter (comp #{player} @table-data) (keys @table-data)))))
-          @winning-positions))
+    (if-not (empty? (filter (fn [winning-combo] (clojure.set/subset? winning-combo (played-positions player))) @winning-positions))
           (js/alert (str "Hurray \"" player "\" Won the game"))
       )))
 
